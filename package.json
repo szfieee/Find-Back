@@ -1,0 +1,17 @@
+{
+  "name": "findback-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "REST API FindBack untuk laporan dan pencarian barang hilang",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js"
+  },
+  "dependencies": {
+    "@vercel/node": "^3.2.29",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "vercel": "^65.2.0"
+  }
+}
