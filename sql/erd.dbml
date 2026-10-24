@@ -1,0 +1,74 @@
+Table users {
+  user_id int [pk, increment]
+  username varchar(50) [unique, not null]
+  email varchar(100) [unique, not null]
+  password varchar(255) [not null]
+  role varchar(10) [not null]
+  created_at timestamp
+}
+Table user_profiles {
+  profile_id int [pk, increment]
+  user_id int [not null, unique]
+  full_name varchar(100) [not null]
+  phone varchar(20)
+  address text
+  avatar_url varchar(255)
+}
+Table categories {
+  category_id int [pk, increment]
+  category_name varchar(50) [unique, not null]
+  description text
+}
+Table locations {
+  location_id int [pk, increment]
+  location_name varchar(100) [not null]
+  city varchar(50) [not null]
+  address text
+  latitude decimal(9,6)
+  longitude decimal(9,6)
+}
+Table items {
+  item_id int [pk, increment]
+  user_id int [not null]
+  category_id int [not null]
+  location_id int [not null]
+  type item_type [not null]
+  title varchar(150) [not null]
+  description text
+  event_date date [not null]
+  status item_status [not null]
+  created_at timestamp
+}
+Table item_images {
+  image_id int [pk, increment]
+  item_id int [not null]
+  image_url varchar(255) [not null]
+  is_primary boolean
+  uploaded_at timestamp
+}
+Table claims {
+  claim_id int [pk, increment]
+  item_id int [not null]
+  claimer_id int [not null]
+  proof_desc text [not null]
+  status claim_status
+  claimed_at timestamp
+}
+Table tags {
+  tag_id int [pk, increment]
+  tag_name varchar(30) [unique, not null]
+}
+Table item_tags {
+  item_id int [not null]
+  tag_id int [not null]
+  indexes { (item_id, tag_id) [pk] }
+}
+Ref: user_profiles.user_id - users.user_id
+Ref: items.user_id > users.user_id
+Ref: items.category_id > categories.category_id
+Ref: items.location_id > locations.location_id
+Ref: item_images.item_id > items.item_id
+Ref: claims.item_id > items.item_id
+Ref: claims.claimer_id > users.user_id
+Ref: item_tags.item_id > items.item_id
+Ref: item_tags.tag_id > tags.tag_id
