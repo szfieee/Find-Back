@@ -69,8 +69,15 @@ module.exports = asyncHandler(async (req, res) => {
     });
 
   // Liveness check does not require a database connection.
-  if (method === "GET" && resource === "health")
+  if (method === "GET" && resource === "health") {
+    // Optional DB probe on the stable health route avoids rewrite/path edge cases.
+    if (url.searchParams.get("db") === "1") {
+      const db = getPool();
+      await db.query("SELECT 1");
+      return send(res, 200, { message: "Koneksi database berhasil", status: "ok" });
+    }
     return send(res, 200, { message: "FindBack API aktif", status: "ok" });
+  }
 
   // Separate database check so connection/schema errors are easier to identify.
   if (method === "GET" && resource === "db-health") {
