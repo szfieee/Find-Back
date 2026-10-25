@@ -169,3 +169,6 @@ Import `postman/FindBack.postman_collection.json`, lalu ganti variable `baseUrl`
 - Endpoint claims belum disediakan meskipun tabel `claims` tersedia di database.
 - Login, token, dan otorisasi belum dibuat. Jangan gunakan untuk data sensitif/produksi tanpa autentikasi dan pembatasan akses.
 - Foto disimpan sebagai URL, bukan upload file langsung.
+
+## ERD Database FindBack
+![ERD FindBack](./erd-findback.png)
