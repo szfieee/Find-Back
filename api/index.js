@@ -52,17 +52,34 @@ const itemSelect = `
  JOIN locations l ON l.location_id=i.location_id`;
 
 module.exports = asyncHandler(async (req, res) => {
-  const db = getPool();
   const method = req.method.toUpperCase();
   const url = new URL(req.url, "http://localhost");
   const parts = url.pathname.replace(/\/+$/, "").split("/").filter(Boolean);
-  // Vercel rewrite maps every route to /api; use original URL path.
+  // Vercel rewrite maps requests to /api; preserve the requested route when available.
   const route = parts[0] === "api" ? parts.slice(1) : parts;
   const resource = route[0] || "";
   const id = route[1] ? parseId(route[1]) : null;
 
+  // Root endpoint is useful when opening the deployment URL in a browser.
+  if (method === "GET" && !resource)
+    return send(res, 200, {
+      message: "FindBack API aktif",
+      status: "ok",
+      endpoints: ["/health", "/db-health", "/items", "/categories", "/locations", "/tags"]
+    });
+
+  // Liveness check does not require a database connection.
   if (method === "GET" && resource === "health")
     return send(res, 200, { message: "FindBack API aktif", status: "ok" });
+
+  // Separate database check so connection/schema errors are easier to identify.
+  if (method === "GET" && resource === "db-health") {
+    const db = getPool();
+    await db.query("SELECT 1");
+    return send(res, 200, { message: "Koneksi database berhasil", status: "ok" });
+  }
+
+  const db = getPool();
 
   if (resource === "items") {
     if (method === "GET" && !route[1]) {
