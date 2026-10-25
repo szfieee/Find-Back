@@ -34,10 +34,8 @@ Jangan commit `.env` atau membagikan connection string. Password pada tabel user
 1. Push folder project ke repository GitHub.
 2. Import repository di dashboard Vercel.
 3. Tambahkan Environment Variable `DATABASE_URL` dengan connection string PostgreSQL.
-4. Deploy. Base URL akan berbentuk `https://nama-project.vercel.app`.
-5. Tes `GET https://nama-project.vercel.app/health`.
-
-Saya tidak dapat menerbitkan deployment atau membuat repository atas nama pengguna dari file ini; URL publik baru tersedia setelah langkah deploy dilakukan.
+4. Deploy. Base URL akan berbentuk `https://findback-backend-nine.vercel.app/`.
+5. Tes `GET https://findback-backend-nine.vercel.app/health`.
 
 ## Format umum
 - Header request JSON: `Content-Type: application/json`
@@ -49,7 +47,7 @@ Saya tidak dapat menerbitkan deployment atau membuat repository atas nama penggu
 
 ## Endpoint API
 
-Base URL contoh: `https://nama-project.vercel.app` (ganti dengan URL Vercel setelah deploy).
+Base URL: `https://findback-backend-nine.vercel.app/`.
 
 ### 1. Health check
 - Method: `GET`
@@ -172,3 +170,8 @@ Import `postman/FindBack.postman_collection.json`, lalu ganti variable `baseUrl`
 
 ## ERD Database FindBack
 ![ERD FindBack](./erd-findback.png)
+
+## Link Project
+
+- Repository GitHub: https://github.com/szfieee/Find-Back.git
+- Deployment Vercel: https://findback-backend-nine.vercel.app/
